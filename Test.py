@@ -14,20 +14,21 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
     for filename in filenames:
         print(os.path.join(dirname, filename))
 
-train_data = pd.read_csv("/kaggle/input/titanic/train.csv")
-test_data = pd.read_csv("/kaggle/input/titanic/test.csv")
+data = pd.read_csv("data/Titanic-Dataset.csv")
 
-train_data['Age'].fillna(train_data['Age'].median(), inplace = True)
+test_data = pd.read_csv("data/test.csv")
+
+data['Age'].fillna(data['Age'].median(), inplace = True)
 test_data['Age'].fillna(test_data['Age'].median(), inplace = True)
 
-train_data.isnull().sum()
+data.isnull().sum()
 
 from sklearn.ensemble import RandomForestClassifier
 
-y = train_data["Survived"]
+y = data["Survived"]
 
 features = ["Pclass", "Sex", "SibSp", "Parch", "Age"]
-X = pd.get_dummies(train_data[features])
+X = pd.get_dummies(data[features])
 X_test = pd.get_dummies(test_data[features])
 
 model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=1)
